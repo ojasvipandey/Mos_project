@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Transformation Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(106, 65, 156);">
+    <h2>Stress Transformation Calculator</h2>
+    <label for="sigmaX">Enter σx:</label>
+    <input type="text" id="sigmaX" placeholder="σx">
+    
+    <label for="sigmaY">Enter σy:</label>
+    <input type="text" id="sigmaY" placeholder="σy">
+    
+    <label for="tauXY">Enter τxy:</label>
+    <input type="text" id="tauXY" placeholder="τxy">
+    
+    <button onclick="calculateStress()">Calculate</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateStress() {
+            const sigmaX = parseFloat(document.getElementById("sigmaX").value);
+            const sigmaY = parseFloat(document.getElementById("sigmaY").value);
+            const tauXY = parseFloat(document.getElementById("tauXY").value);
+
+            const sigma1 = (sigmaX + sigmaY) / 2 + Math.sqrt(Math.pow((sigmaX - sigmaY) / 2, 2) + Math.pow(tauXY, 2));
+            const sigma2 = (sigmaX + sigmaY) / 2 - Math.sqrt(Math.pow((sigmaX - sigmaY) / 2, 2) + Math.pow(tauXY, 2));
+
+            const theta_p = 0.5 * Math.atan((2 * tauXY) / (sigmaX - sigmaY)) * (180 / Math.PI);
+
+            document.getElementById("result").innerHTML = `
+                <p>Principal Stress 1 (σ1): ${sigma1.toFixed(2)}</p>
+                <p>Principal Stress 2 (σ2): ${sigma2.toFixed(2)}</p>
+                <p>Principal Angle (θp): ${theta_p.toFixed(2)} degrees</p>
+            `;
+        }
+    </script>
+</body>
+</html>

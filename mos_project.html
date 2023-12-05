@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Transformation Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(106, 65, 156);">
+    <h2>Stress Transformation Calculator</h2>
+    <label for="sigmaX">Enter σx:</label>
+    <input type="text" id="sigmaX" placeholder="σx">
+    
+    <label for="sigmaY">Enter σy:</label>
+    <input type="text" id="sigmaY" placeholder="σy">
+    
+    <label for="tauXY">Enter τxy:</label>
+    <input type="text" id="tauXY" placeholder="τxy">
+
+    <label for="theta">Enter theta:</label>
+    <input type="text" id="theta" placeholder="theta">
+    
+    <button onclick="calculateStress()">Calculate</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateStress() {
+            const sigmaX = parseFloat(document.getElementById("sigmaX").value);
+            const sigmaY = parseFloat(document.getElementById("sigmaY").value);
+            const tauXY = parseFloat(document.getElementById("tauXY").value);
+            const theta = parseFloat(document.getElementById("theta").value)/180*Math.PI;
+
+            const sigma1 = (sigmaX + sigmaY) / 2 + (sigmaX - sigmaY)* Math.cos(2*theta) / 2 + tauXY* Math.sin(2*theta);
+            const sigma2 = (sigmaX + sigmaY) / 2 - (sigmaX - sigmaY)* Math.cos(2*theta) / 2 - tauXY* Math.sin(2*theta);
+
+            const theta_p = -(sigmaX - sigmaY)* Math.sin(2*theta) / 2 + tauXY* Math.cos(2*theta);
+
+            document.getElementById("result").innerHTML = `
+                <p>New Normal Stress 1 (σx'): ${sigma1.toFixed(2)} MPa</p>
+                <p>New Normal Stress 2 (σy'): ${sigma2.toFixed(2)} MPa</p>
+                <p>New Shear Stress (τx'y'): ${theta_p.toFixed(3)} MPa</p>
+            `;
+        }
+    </script>
+</body>
+</html>
