@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shear Stress Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(106, 65, 156);>
+    <h2>Shear Stress Calculator</h2>
+    
+    <label for="torque">Enter Torque (T):</label>
+    <input type="text" id="torque" placeholder="Torque (N·m)">
+    
+    <label for="radius">Enter Radial Distance (r):</label>
+    <input type="text" id="radius" placeholder="Radial Distance (m)">
+    
+    <label for="inertia">Enter Polar Moment of Inertia (J):</label>
+    <input type="text" id="inertia" placeholder="Polar Moment of Inertia (m^4)">
+    
+    <button onclick="calculateShearStress()">Calculate Shear Stress</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateShearStress() {
+            const torque = parseFloat(document.getElementById("torque").value);
+            const radius = parseFloat(document.getElementById("radius").value);
+            const inertia = parseFloat(document.getElementById("inertia").value);
+
+            if (isNaN(torque) || isNaN(radius) || isNaN(inertia)) {
+                alert("Please enter valid numerical values.");
+                return;
+            }
+
+            const shearStress = (torque * radius) / inertia;
+
+            document.getElementById("result").innerHTML = `
+                <p>Shear Stress (τ): ${shearStress.toFixed(2)} N/m^2</p>
+            `;
+        }
+    </script>
+</body>
+</html>
